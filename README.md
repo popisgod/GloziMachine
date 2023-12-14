@@ -1,2 +1,2 @@
-# GloziMachine
-For the Glozis in between us.
+# VeryCoolVM
+For the [REDACTED] in between us.
