@@ -1,2 +1,2 @@
 # GloziMachine
-For the glozis in between us 
+For the glozis in between us.
