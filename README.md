@@ -1,2 +1,2 @@
-# GloziMachine
-For the Glozis in between us.
+# Research Branch 
+This branch holds all study materials for the project.
