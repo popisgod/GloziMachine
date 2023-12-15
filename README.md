@@ -12,3 +12,8 @@ This branch serves as a hub for research materials and resources for the ongoing
 
 - [How to Build a Virtual Machine](https://www.youtube.com/watch?v=OjaAToVkoTw)
 - [Stack Virtual Machine - series](https://www.youtube.com/playlist?list=PLSiFUSQSRYAOFwfP-aMzXJlWKVyIuWfPU)
+
+---
+
+Feel free to contribute additional research materials or update the content to aid in the project's progress!
+
