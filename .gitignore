@@ -402,4 +402,12 @@ CppProperties.json
 
 # CMake build 
 out/
+lc3_Sim.dir 
 
+# Visual Studio files
+*.vcxproj
+*.CMake
+*.filters
+*.sln
+CMakeFiles/
+CMakeCache.txt

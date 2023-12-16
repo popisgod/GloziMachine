@@ -106,7 +106,7 @@ int main(int argc, const char* argv[]) {
                 uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
                 if (reg[R_COND] & (flagN) || reg[R_COND] & (flagZ) || reg[R_COND] & (flagP))
                 {
-                    reg[R_PC] = reg[R_pC] + pc_offset;
+                    reg[R_PC] = reg[R_PC] + pc_offset;
                 }
 
                 break;
@@ -227,7 +227,7 @@ int main(int argc, const char* argv[]) {
                 case TRAP_GETC:
                 {
                     reg[R_R0] = getc(stdin); 
-                    update_flags(R_R0)
+                    update_flags(R_R0);
 
                     break; 
                 }
