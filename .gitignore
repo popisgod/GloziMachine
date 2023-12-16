@@ -399,3 +399,7 @@ FodyWeavers.xsd
 
 # Cpp configuration files
 CppProperties.json
+
+# CMake build 
+out/
+

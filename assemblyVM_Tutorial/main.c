@@ -1,5 +1,8 @@
 #include "memory.c"
-#incldue "stdio.h"
+#include "stdio.h"
+
+
+
 
 
 int main(int argc, const char* argv[]) {
