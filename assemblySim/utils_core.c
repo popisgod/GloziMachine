@@ -1,4 +1,4 @@
-#include "memory.c"
+#include "lc3_config.h"
 
 uint16_t sign_extend(uint16_t x, int bit_count) {
 	if ((x >> (bit_count - 1)) & 1) {
@@ -6,6 +6,8 @@ uint16_t sign_extend(uint16_t x, int bit_count) {
 	}
 	return x; 
 }
+
+
 
 void update_flags(uint16_t r) {	
 	if (reg[r] == 0)

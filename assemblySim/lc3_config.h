@@ -1,5 +1,10 @@
 #pragma once 
+#include <stdint.h>
+#include <stdio.h>
+
+/* definitions */
 #define MEMORY_MAX (1 << 16)
+
 uint16_t memory[MEMORY_MAX];  /* 65536 locations */
   
 // Registers 
@@ -16,7 +21,7 @@ enum
     R_PC, /* program counter */
     R_COND,
     R_COUNT
-}
+}; 
 
 // register storage 
 uint16_t reg[R_COUNT];
@@ -49,3 +54,7 @@ enum
     OP_LEA,    /* load effective address */
     OP_TRAP    /* execute trap */
 };
+
+/* functions definitions */
+uint16_t sign_extend(uint16_t x, int bit_count); 
+void update_flags(uint16_t r);
