@@ -30,6 +30,9 @@ int main(int argc, const char* argv[]) {
     int running = 1;
     while (running)
     {
+        signal(SIGINT, handle_interrupt);
+        disable_input_buffering();
+
         /* FETCH */
         uint16_t instr = mem_read(reg[R_PC]++);
         uint16_t op = instr >> 12;
@@ -189,7 +192,7 @@ int main(int argc, const char* argv[]) {
                 uint16_t r0 = (instr >> 9) & 0x7;
                 /* PCoffset 9*/
                 uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
-                memory[reg[R_PC] + pc_offset] = reg[r0];
+                mem_write(reg[R_PC] + pc_offset, reg[r0]);
 
                 break; 
             }
@@ -199,7 +202,7 @@ int main(int argc, const char* argv[]) {
                 uint16_t r0 = (instr >> 9) & 0x7;
                 /* PCoffset 9*/
                 uint16_t pc_offset = sign_extend(instr & 0x1FF, 9);
-                memory[memory[reg[R_PC] + pc_offset]] = reg[r0];
+                mem_write(mem_read(reg[R_PC] + pc_offset), reg[r0]);
 
                 break; 
             }
@@ -211,14 +214,79 @@ int main(int argc, const char* argv[]) {
                 uint16_t r1 = (instr >> 6) & 0x7;
                 /* offset 6*/
                 uint16_t offset = sign_extend(instr & 0x1F, 5);
-                memory[reg[r1] + offset] = reg[r0];
+                mem_write(reg[r1] + offset, reg[r0]); 
 
                 break;
             }
             case OP_TRAP:
             {
                 reg[R_PC] = reg[R_R7];
-                PC = memory[instr & 0xFF];
+
+                switch (instr & 0xFF)
+                {
+                case TRAP_GETC:
+                {
+                    reg[R_R0] = getc(stdin); 
+                    update_flags(R_R0)
+
+                    break; 
+                }
+                case TRAP_OUT:
+                {
+                    putc((char)reg[R_R0], stdout);
+                    fflush(stdout);
+
+                    break; 
+                }
+                case TRAP_PUTS:
+                {
+                    /* one char per word */
+                    uint16_t* c = memory + reg[R_R0]; 
+                    while (*c)
+                    {
+                        putc((char)*c, stdout);
+                        ++c; 
+                    }
+                    fflush(stdout);
+                    
+                    break; 
+                }
+                case TRAP_IN:
+                {
+                    printf("Enter a character: ");
+                    char c = getchar(); 
+                    putc(c, stdout);
+                    fflush(stdout); 
+                    reg[R_R0] = (uint16_t)c; 
+                    
+                    update_flags(R_R0);
+                    break; 
+                }
+                case TRAP_PUTSP:
+                {
+                    /* one char per byte (two bytes per word)
+                       here we need to swap back to
+                       big endian format */
+                    uint16_t* c = memory + reg[R_R0];
+                    while (*c)
+                    {
+                        char char1 = (*c) & 0xFF;
+                        putc(char1, stdout);
+                        char char2 = (*c) >> 8;
+                        if (char2) putc(char2, stdout);
+                        ++c;
+                    }
+                    fflush(stdout);
+                    break;
+                }
+                case TRAP_HALT:
+                {
+                    puts("HALT");
+                    fflush(stdout);
+                    running = 0;
+                }
+                }
+
 
                 break;
             }
@@ -232,5 +300,6 @@ int main(int argc, const char* argv[]) {
                 
         }
     }
-    @{Shutdown}
+    restore_input_buffering();
 }
+
