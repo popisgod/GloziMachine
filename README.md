@@ -6,7 +6,7 @@ This branch serves as a hub for research materials and resources for the ongoing
 
 - [Write your Own Virtual Machine](https://www.jmeiners.com/lc3-vm/)
 - [Writing a simple 16 bit VM in less than 125 lines of C](https://www.andreinc.net/2021/12/01/writing-a-simple-vm-in-less-than-125-lines-of-c)
-
+- [Hypervisor From Scratch](https://rayanfam.com/topics/hypervisor-from-scratch-part-1/)
 
 ## Videos 
 
